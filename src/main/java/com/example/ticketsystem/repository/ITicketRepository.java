@@ -18,4 +18,9 @@ public interface ITicketRepository extends JpaRepository<Ticket, Long> {
 	
 	@Query("select t from TICKET t where t.statusUpdatedOn < :statusUpdatedOn and t.status = :status ")
 	public List<Ticket> findByStatusUpdatedOnGreaterThanAndStatusResolved( @Param("statusUpdatedOn") Date statusUpdatedOn, @Param("status") Integer status );
+	
+	public List<Ticket> findByAssignedToIsNull();
+	
+	public List<Ticket> findByAssignedTo(User user);
+
 }

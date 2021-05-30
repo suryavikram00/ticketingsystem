@@ -148,6 +148,42 @@ public class TicketService implements ITicketService {
 		}
 		return user;
 	}
+
+	@Override
+	public List<User> findByRole(Integer roleId) {
+		List<User> userList = new LinkedList<User>();
+		try {
+			userList = userRepository.findByRole(roleId);
+			logger.info("Successfully fetched User with role :: " + roleId + " | size :: " + userList.size());
+		} catch (Exception e) {
+			logger.info(e.toString());
+		}
+		return userList;
+	}
+
+	@Override
+	public List<Ticket> findByAssignedToIsNull() {
+		List<Ticket> ticketList = new LinkedList<Ticket>();
+		try {
+			ticketList = ticketRepository.findByAssignedToIsNull();
+			logger.info("Successfully fetched unassigned tickets | size :: " + ticketList.size());
+		} catch (Exception e) {
+			logger.info(e.toString());
+		}
+		return ticketList;
+	}
+
+	@Override
+	public List<Ticket> findByAssignedTo(User user) {
+		List<Ticket> ticketList = new LinkedList<Ticket>();
+		try {
+			ticketList = ticketRepository.findByAssignedTo(user);
+			logger.info("Successfully fetched assigned tickets for userId :: "+ user.getUserId() +" | size :: " + ticketList.size());
+		} catch (Exception e) {
+			logger.info(e.toString());
+		}
+		return ticketList;
+	}
 	
 	
 	

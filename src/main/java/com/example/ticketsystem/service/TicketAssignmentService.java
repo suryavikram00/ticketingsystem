@@ -28,9 +28,10 @@ public class TicketAssignmentService implements ITicketAssignmentService {
 	public TicketAssignmentService() {
 
 		// get all agents from the system and assign it to agentList
-
+		agentList = ticketService.findByRole(1);
+		
 		// the number of agents will be returned from service
-		this.noOfAgents = 5;
+		this.noOfAgents = agentList.size();
 
 		// update the agentList map with value false by default
 		this.buildAssignedAgent();
@@ -89,8 +90,8 @@ public class TicketAssignmentService implements ITicketAssignmentService {
 		this.noOfAgents--;
 		this.buildTicketBucketMap();
 		// get all tickets assigned to the particular agent
-		List<Ticket> assignedTicketForThisAgent = new LinkedList<>();
-
+		User agent = ticketService.getUser(agentId);
+		List<Ticket> assignedTicketForThisAgent = ticketService.findByAssignedTo(agent);
 		// call assignTicketToAgent() method with the ticketId
 		for (Ticket eachTicket : assignedTicketForThisAgent) {
 			this.assignTicketToAgent(eachTicket.getTicketId());
@@ -103,7 +104,7 @@ public class TicketAssignmentService implements ITicketAssignmentService {
 		this.buildTicketBucketMap();
 
 		// get all unassigned tickets
-		List<Ticket> allUnassignedTicket = new LinkedList<>();
+		List<Ticket> allUnassignedTicket = ticketService.findByAssignedToIsNull();
 
 		// call assignTicketToAgent() method with the ticketId
 		for (Ticket eachTicket : allUnassignedTicket) {

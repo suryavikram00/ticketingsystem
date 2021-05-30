@@ -23,4 +23,10 @@ public interface ITicketService {
 	
 	public List<Ticket> getTicketResolvedAfter30Days(Date date, Integer ticketStatus);
 	
+	public List<User> findByRole(Integer roleId);
+	
+	public List<Ticket> findByAssignedToIsNull();
+	
+	public List<Ticket> findByAssignedTo(User user);
+	
 }
